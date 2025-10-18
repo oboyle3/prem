@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>dashboard</title>
+    </head>
+    <body>
+        <h1>dashboard.html</h1>
+        <p>hi {{user.username}}</p>
+        <table>
+            <thead>
+                <tr>
+                    {% for head in headers %}
+                        <th>{{head}}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr>
+                    {% for item in row %}
+                        <td>{{ item }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+         
+        </table>
+        <a href="{% url 'logout' %}">logout</a>
+    </body>
+</html>
