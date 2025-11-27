@@ -23,4 +23,5 @@ urlpatterns = [
     path('',views.landing,name='landing'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('dashboard/',views.dashboard,name='dashboard'),
+    path('change_fav_team/',views.change_fav_team,name='change_fav_team'),
 ]

@@ -20,9 +20,20 @@
     </style>
 </head>
 <body>
-    <h1>dashboard.html</h1>
+    <h1>dashboard.html</h1> <a href="http://127.0.0.1:8000/change_fav_team/">Change Fav Team</a>
     <p>hi {{ user.username }}</p>
-    <p>hi {{ favorite_team.name }}</p>
+    {% if favorite_team %}
+    <p>Your favorite team: {{ favorite_team.name }}</p>
+{% else %}
+    <p>You have not selected a favorite team.</p>
+{% endif %}
+     <h1>Premier League Teams from my database</h1>
+
+     <ul>
+    {% for team in teams %}
+        <li>{{ team.name }}</li>
+    {% endfor %}
+     </ul>
 
     <table>
         <thead>
@@ -42,6 +53,9 @@
             {% endfor %}
         </tbody>
     </table>
+
+
+   
 
     <a href="{% url 'logout' %}">logout</a>
 </body>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Change Your Favorite team page </title>
+    <style>
+        h1 {
+            font-size: 50px; /* smaller text */
+            width: auto; /* only as wide as needed */
+            border-collapse: collapse;
+            margin: 20px 0;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        p {
+            font-size: 50px; /* smaller text */
+            width: auto; /* only as wide as needed */
+            border-collapse: collapse;
+            margin: 20px 0;
+            text-align: center;
+
+        }
+        footer {
+            font-size: 30px; /* smaller text */
+            width: auto; /* only as wide as needed */
+            
+            margin: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Change your favorite team page</h1>
+    <p>hi {{ user.username }}</p>
+    <form method="POST">
+    {% csrf_token %}
+
+    <label for="favorite_team">Favorite Team:</label>
+    <select name="favorite_team" id="favorite_team" required>
+        <option value="">-- Choose a Team --</option>
+
+        {% for team in teams %}
+            <option value="{{ team.id }}"
+                {% if profile.favorite_team and profile.favorite_team.id == team.id %}
+                    selected
+                {% endif %}
+            >
+                {{ team.name }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+    <button type="submit">Save Favorite Team</button>
+</form>
+   
+    <a href="{% url 'logout' %}">logout</a>
+    <footer>
+  
+  <p1> <a href="http://127.0.0.1:8000/dashboard/">Back to Dashboard</a></p1>
+</footer>
+</body>
+</html>
