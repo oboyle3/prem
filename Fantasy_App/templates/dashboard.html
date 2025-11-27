@@ -4,7 +4,7 @@
     <title>dashboard</title>
     <style>
         table {
-            font-size: 8px; /* smaller text */
+            font-size: 32px; /* smaller text */
             width: auto; /* only as wide as needed */
             border-collapse: collapse;
             margin: 20px 0;
@@ -17,10 +17,14 @@
         th {
             background-color: #f2f2f2;
         }
+        a {
+            font-size: 32px; /* smaller text */
+        }
     </style>
 </head>
 <body>
-    <h1>dashboard.html</h1> <a href="http://127.0.0.1:8000/change_fav_team/">Change Fav Team</a>
+    <!--<h1>dashboard.html</h1> <a href="http://127.0.0.1:8000/change_fav_team/">Change Fav Team</a><br>
+    <a href="http://127.0.0.1:8000/withdraw/">WithDraw</a>
     <p>hi {{ user.username }}</p>
     {% if favorite_team %}
     <p>Your favorite team: {{ favorite_team.name }}</p>
@@ -30,6 +34,55 @@
 <p><strong>User:</strong> {{ wallet.user.username }}</p>
 <p><strong>Currency:</strong> {{ currency.name }}</p>
 <p><strong>Balance:</strong> {{ wallet.balance}}</p>
+<p><strong>Total Supply:</strong> {{ currency.total_supply }}</p>
+-->
+
+<h1 style="display:inline;">hi {{ user.username }}</h1>
+&nbsp; | &nbsp;
+<a href="http://127.0.0.1:8000/change_fav_team/">Change Fav Team</a>
+&nbsp; | &nbsp;
+<a href="http://127.0.0.1:8000/withdraw/">Withdraw</a>
+&nbsp; | &nbsp;
+<a href="http://127.0.0.1:8000/admin/">Admin</a>
+<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 800px;">
+    <tr>
+        <th colspan="2" style="text-align:center;">User Info</th>
+    </tr>
+
+    <tr>
+        <td><strong>User</strong></td>
+        <td>{{ wallet.user.username }}</td>
+    </tr>
+
+    <tr>
+        <td><strong>Currency</strong></td>
+        <td>{{ currency.name }}</td>
+    </tr>
+
+    <tr>
+        <td><strong>Balance in your account</strong></td>
+        <td>{{ wallet.balance }}</td>
+    </tr>
+
+    <tr>
+        <td><strong>Total Supply in this Economy</strong></td>
+        <td>{{ currency.total_supply }}</td>
+    </tr>
+
+    <tr>
+        <td><strong>Favorite Team</strong></td>
+        <td>
+            {% if favorite_team %}
+                {{ favorite_team.name }}
+            {% else %}
+                Not selected
+            {% endif %}
+        </td>
+    </tr>
+</table>
+
+
+
 
      <h1>Premier League Teams from my database</h1>
 

@@ -1,3 +1,4 @@
+from pyexpat.errors import messages
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .scraper import get_premier_league_table
@@ -7,6 +8,8 @@ from .models import Game, Prediction , Team
 from django.shortcuts import render, get_object_or_404, redirect
 def landing(request):
     return render(request, 'landing.html')
+
+
 
 # @login_required
 # def dashboard(request):
@@ -66,3 +69,31 @@ def change_fav_team(request):
         "teams": teams,
     })
 
+
+
+@login_required
+def withdraw(request):
+    print("withdraw function called")
+
+    user = request.user
+    print("user requesting:", user)
+
+    wallet = user.wallet  
+    print(user, "has this much in their wallet:", wallet.balance)
+
+    currency = Currency.objects.first()
+    print(currency, "This is the amount in the economy:", currency.total_supply)
+
+    if request.method == "POST":
+        print("1) user hit post")
+        amount = int(request.POST.get("amount"))
+        print("2) for amount ", amount)
+        # Process withdrawal
+        wallet.balance += amount
+        wallet.save()
+        currency.total_supply -= amount
+        currency.save()
+        return redirect("dashboard")
+
+
+    return render(request, "withdraw.html", {"wallet": wallet})
