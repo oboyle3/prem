@@ -5,6 +5,7 @@ class Team(models.Model):
     city = models.CharField(max_length=100, blank=True, null=True)
     founded_year = models.IntegerField(blank=True, null=True)
     stadium = models.CharField(max_length=100, blank=True, null=True)
+    #played_games = models.IntegerField()
 
     def __str__(self):
         return self.name
@@ -56,6 +57,25 @@ class Prediction(models.Model):
 class Match(models.Model):
     home_team = models.ForeignKey(Team, related_name="home_matches", on_delete=models.CASCADE)
     away_team = models.ForeignKey(Team, related_name="away_matches", on_delete=models.CASCADE)
+    match_date = models.DateTimeField()
+    venue = models.CharField(max_length=100, blank=True, null=True)
+    result = models.CharField(max_length=20, blank=True, null=True)  # optional: score like "2-1"
 
     def __str__(self):
-        return f"{self.home_team} vs {self.away_team}"
+        return f"{self.home_team} vs {self.away_team} on {self.match_date.strftime('%Y-%m-%d')}"
+    
+
+
+class Currency(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    total_supply = models.PositiveBigIntegerField(default=10_000_000)
+
+    def __str__(self):
+        return self.name
+    
+class Wallet(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    balance = models.PositiveBigIntegerField(default=0)
+
+    def __str__(self):
+        return f"self.user.username Wallet"
