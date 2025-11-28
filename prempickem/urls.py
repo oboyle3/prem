@@ -25,4 +25,5 @@ urlpatterns = [
     path('dashboard/',views.dashboard,name='dashboard'),
     path('change_fav_team/',views.change_fav_team,name='change_fav_team'),
     path('withdraw/',views.withdraw,name='withdraw'),
+    path('signup/',views.signup,name='signup'),
 ]

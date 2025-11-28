@@ -5,6 +5,7 @@ from .scraper import get_premier_league_table
 from .models import Team, UserProfile ,Wallet, Currency
 from .forms import PredictionForm
 from .models import Game, Prediction , Team
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, get_object_or_404, redirect
 def landing(request):
     return render(request, 'landing.html')
@@ -97,3 +98,15 @@ def withdraw(request):
 
 
     return render(request, "withdraw.html", {"wallet": wallet})
+
+
+def signup(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()  # <-- IMPORTANT
+
+    return render(request, "signup.html", {"form": form})
