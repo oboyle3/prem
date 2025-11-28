@@ -79,3 +79,15 @@ class Wallet(models.Model):
 
     def __str__(self):
         return f"self.user.username Wallet"
+    
+
+
+class Stock(models.model):
+    symbol = models.Charfield(max_length=10, unique = True)
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=12, decimal_places=10, unique=True)
+    total_supply = models.PositiveIntegerField(default=0) #how many shares exist
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.symbol} - {self.name}"
