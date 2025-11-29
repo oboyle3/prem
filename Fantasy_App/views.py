@@ -3,10 +3,11 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .scraper import get_premier_league_table
 from .models import Team, UserProfile ,Wallet, Currency
-from .forms import PredictionForm
-from .models import Game, Prediction , Team
+from .forms import PredictionForm , StockForm
+from .models import Game, Prediction , Team, Stock
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, get_object_or_404, redirect
+
 def landing(request):
     return render(request, 'landing.html')
 
@@ -19,6 +20,8 @@ def landing(request):
 #path('change_fav_team/',viewschange_fav_team,name='change_fav_team'),
 @login_required
 def dashboard(request):
+     stocks = Stock.objects.all()
+     print("these are the stocks:", stocks)
      wallet = request.user.wallet
      currency = Currency.objects.first()
      teams = Team.objects.all()
@@ -37,6 +40,7 @@ def dashboard(request):
         "teams": teams,
         "wallet": wallet,
         "currency": currency,
+        "stocks": stocks,
         
     })
    # return render(request,'dashboard.html',{'teams':teams})
@@ -110,3 +114,32 @@ def signup(request):
         form = UserCreationForm()  # <-- IMPORTANT
 
     return render(request, "signup.html", {"form": form})
+
+
+
+
+
+def addstock(request):
+    print("=== Add Stock View Hit ===")
+
+    if request.method == "POST":
+        print("Request method: POST")
+        print("POST DATA:", request.POST)
+
+        form = StockForm(request.POST)
+        print("Form created:", form)
+
+        if form.is_valid():
+            print("Form is VALID ✔")
+            stock = form.save()
+            print("Saved stock:", stock)
+            return redirect("dashboard")
+        else:
+            print("Form is NOT valid ")
+            print("FORM ERRORS:", form.errors)
+
+    else:
+        print("Request method: GET (displaying form)")
+        form = StockForm()
+
+    return render(request, "addstock.html", {"form": form})

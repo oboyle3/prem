@@ -82,8 +82,8 @@ class Wallet(models.Model):
     
 
 
-class Stock(models.model):
-    symbol = models.Charfield(max_length=10, unique = True)
+class Stock(models.Model):
+    symbol = models.CharField(max_length=10, unique = True)
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=12, decimal_places=10, unique=True)
     total_supply = models.PositiveIntegerField(default=0) #how many shares exist

@@ -44,6 +44,8 @@
 <a href="http://127.0.0.1:8000/withdraw/">Withdraw</a>
 &nbsp; | &nbsp;
 <a href="http://127.0.0.1:8000/admin/">Admin</a>
+&nbsp; | &nbsp;
+<a href="http://127.0.0.1:8000/addstock/">Add Stock</a>
 <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 800px;">
     <tr>
         <th colspan="2" style="text-align:center;">User Info</th>
@@ -80,9 +82,19 @@
         </td>
     </tr>
 </table>
+  <h1>stocks database</h1>
+
+     <ul>
+    {% for stock in stocks %}
+        <li>{{ stock.name }}</li>
+    {% endfor %}
+     </ul>
+
+    
 
 
-
+<h1>TEST</h1><br>
+<h1>TEST</h1>
 
      <h1>Premier League Teams from my database</h1>
 

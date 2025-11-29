@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>add stock</title>
+    <style>
+        body { font-family: Arial; background: #c67070; padding: 50px; }
+        .box {
+            width: 300px;
+            background: white;
+            padding: 20px;
+            margin: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        input { width: 100%; padding: 8px; margin-bottom: 10px; }
+        button {
+            width: 100%; padding: 10px;
+            background: black; color: white; border: none;
+            border-radius: 5px; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Create a Stock</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        
+        <label>symbol</label>
+        {{ form.symbol }}
+
+        <label>name of comany</label>
+        {{ form.name }}
+
+        <label>price</label>
+        {{ form.price }}
+
+        <label>total_supply of shares</label>
+        {{ form.total_supply }}
+
+        <button type="submit">Create!</button>
+    </form>
+
+    <p style="margin-top: 20px;">
+        
+    </p>
+</div>
+
+</body>
+</html>
+symbol = models.CharField(max_length=10, unique = True)
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(max_digits=12, decimal_places=10, unique=True)
+    total_supply = models.PositiveIntegerField(default=0) #how many shares exist
+    created_at = models.DateTimeField(auto_now_add=True)
