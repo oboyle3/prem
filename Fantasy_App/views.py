@@ -2,9 +2,9 @@ from pyexpat.errors import messages
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .scraper import get_premier_league_table
-from .models import Team, UserProfile ,Wallet, Currency
-from .forms import PredictionForm , StockForm
-from .models import Game, Prediction , Team, Stock
+from .models import Team, UserProfile, UserStock ,Wallet, Currency
+from .forms import BuyStockForm, PredictionForm , StockForm
+from .models import Game, Prediction , Team, Stock , GolfersInDatabase
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -20,8 +20,10 @@ def landing(request):
 #path('change_fav_team/',viewschange_fav_team,name='change_fav_team'),
 @login_required
 def dashboard(request):
+     golfers = GolfersInDatabase.objects.all()
      stocks = Stock.objects.all()
      print("these are the stocks:", stocks)
+     print("GOLFERS:", golfers)
      wallet = request.user.wallet
      currency = Currency.objects.first()
      teams = Team.objects.all()
@@ -41,6 +43,7 @@ def dashboard(request):
         "wallet": wallet,
         "currency": currency,
         "stocks": stocks,
+        "golfers": golfers,
         
     })
    # return render(request,'dashboard.html',{'teams':teams})
@@ -143,3 +146,56 @@ def addstock(request):
         form = StockForm()
 
     return render(request, "addstock.html", {"form": form})
+
+
+
+def premtable(request):
+    return render(request, 'premtable.html')
+
+
+@login_required
+def buy_stock(request, stock_id):
+    stock = get_object_or_404(Stock, id=stock_id)
+    wallet = request.user.wallet
+
+    if request.method == "POST":
+        qty = int(request.POST.get("quantity", 0))
+        cost = qty * stock.price
+
+        if qty <= 0:
+            return render(request, "buy_stock.html", {
+                "stock": stock,
+                "error": "Invalid quantity."
+            })
+
+        if wallet.balance < cost:
+            return render(request, "buy_stock.html", {
+                "stock": stock,
+                "error": "Not enough balance."
+            })
+
+        if stock.total_supply < qty:
+            return render(request, "buy_stock.html", {
+                "stock": stock,
+                "error": "Not enough supply available."
+            })
+
+        # Perform purchase
+        wallet.balance -= cost
+        wallet.save()
+
+        stock.total_supply -= qty
+        stock.save()
+
+        UserStock.objects.create(
+            user=request.user,
+            stock=stock,
+            shares=qty
+        )
+
+        return render(request, "buy_stock.html", {
+            "stock": stock,
+            "success": "Purchase successful!"
+        })
+
+    return render(request, "buy_stock.html", {"stock": stock})

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Team, UserProfile 
 from .models import  Game, Match
-from .models import Wallet, Currency
+from .models import Wallet, Currency, GolfersInDatabase
 
 
 
@@ -11,4 +11,4 @@ admin.site.register(Game)
 admin.site.register(Match)
 admin.site.register(Wallet)
 admin.site.register(Currency)
-
+admin.site.register(GolfersInDatabase)

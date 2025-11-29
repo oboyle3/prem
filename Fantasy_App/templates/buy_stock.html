@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+    <h1 style="display:inline;">hi {{ user.username }}</h1>
+&nbsp; | &nbsp;
+<a href="http://127.0.0.1:8000/change_fav_team/">Change Fav Team</a>
+&nbsp; | &nbsp;
+<a href="http://127.0.0.1:8000/withdraw/">Withdraw</a>
+&nbsp; | &nbsp;
+<a href="http://127.0.0.1:8000/admin/">Admin</a>
+&nbsp; | &nbsp;
+<a href="http://127.0.0.1:8000/addstock/">Add Stock</a>
+&nbsp; | &nbsp;
+<a href="http://127.0.0.1:8000/premtable/">Prem table</a><br><br>
+    <h1>Buy {{ stock.symbol }} - {{ stock.name }}</h1>
+
+<p><strong>Price:</strong> ${{ stock.price }}</p>
+<p><strong>Available Supply:</strong> {{ stock.total_supply }}</p>
+<p><strong>Your Balance:</strong> ${{ wallet.balance }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    
+    <label>Number of Shares to Buy:</label>
+    <input type="number" name="shares" min="1" required>
+
+    <button type="submit">Buy</button>
+</form>
+
+
+<a href="{% url 'dashboard' %}">Back</a>
+</html>

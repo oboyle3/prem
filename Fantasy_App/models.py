@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 class Team(models.Model):
     name = models.CharField(max_length=50)
     city = models.CharField(max_length=100, blank=True, null=True)
@@ -91,3 +92,33 @@ class Stock(models.Model):
 
     def __str__(self):
         return f"{self.symbol} - {self.name}"
+    
+
+'''class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    favorite_team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return self.user.username '''
+
+
+
+class UserStock(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
+    amount = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        unique_together = ("user", "stock")
+
+
+
+class GolfersInDatabase(models.Model):
+    name = models.CharField(max_length=50)
+    hometown = models.CharField(max_length=100, default="Monroe NY:)")
+    tour = models.CharField(max_length=100, default="PGA")
+    rating = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(10)]
+    )
+    def __str__(self):
+        return self.name

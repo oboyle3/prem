@@ -27,4 +27,6 @@ urlpatterns = [
     path('withdraw/',views.withdraw,name='withdraw'),
     path('signup/',views.signup,name='signup'),
     path('addstock/',views.addstock,name='addstock'),
+    path("buy_stock/<int:stock_id>/", views.buy_stock, name="buy_stock"),
 ]
+"""buy_stock"""
