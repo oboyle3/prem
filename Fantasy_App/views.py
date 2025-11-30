@@ -255,7 +255,7 @@ def updateslot1(request):
 
         if golfer_id:
             lineup = UserTrackedGolfers.objects.get(user=request.user)
-            lineup.selection2_id = golfer_id
+            lineup.selection1_id = golfer_id
             lineup.save()
 
         # Redirect to dashboard after saving
@@ -274,7 +274,7 @@ def updateslot3(request):
 
         if golfer_id:
             lineup = UserTrackedGolfers.objects.get(user=request.user)
-            lineup.selection2_id = golfer_id
+            lineup.selection3_id = golfer_id
             lineup.save()
 
         # Redirect to dashboard after saving
@@ -294,7 +294,7 @@ def updateslot4(request):
 
         if golfer_id:
             lineup = UserTrackedGolfers.objects.get(user=request.user)
-            lineup.selection2_id = golfer_id
+            lineup.selection4_id = golfer_id
             lineup.save()
 
         # Redirect to dashboard after saving
@@ -314,7 +314,8 @@ def updateslot5(request):
 
         if golfer_id:
             lineup = UserTrackedGolfers.objects.get(user=request.user)
-            lineup.selection2_id = golfer_id
+            lineup.selection5_id = golfer_id
+            print("lineup selection 2: ", lineup.selection5_id )
             lineup.save()
 
         # Redirect to dashboard after saving
