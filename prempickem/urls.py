@@ -29,5 +29,10 @@ urlpatterns = [
     path('addstock/',views.addstock,name='addstock'),
     path("buy_stock/<int:stock_id>/", views.buy_stock, name="buy_stock"),
     path('select_golfers/',views.select_golfers,name='select_golfers'),
+    path('updateslot2/',views.updateslot2,name='updateslot2'),
+    path('updateslot1/',views.updateslot1,name='updateslot1'),
+    path('updateslot3/',views.updateslot3,name='updateslot3'),
+    path('updateslot4/',views.updateslot4,name='updateslot4'),
+    path('updateslot5/',views.updateslot5,name='updateslot5'),
 ]
-"""buy_stock            select_golfers   """
+"""buy_stock            select_golfers      updateslot2    """

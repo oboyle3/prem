@@ -224,3 +224,102 @@ def select_golfers(request):
     return render(request, "select_golfers.html", {
         "golfers": GolfersInDatabase.objects.all()
     })
+
+
+
+@login_required
+def updateslot2(request):
+    golfers = GolfersInDatabase.objects.filter(rating__gte=7, rating__lte=8)
+    print("updateslot2:", golfers)
+    if request.method == "POST":
+        golfer_id = request.POST.get("golfer")
+
+        if golfer_id:
+            lineup = UserTrackedGolfers.objects.get(user=request.user)
+            lineup.selection2_id = golfer_id
+            lineup.save()
+
+        # Redirect to dashboard after saving
+        return redirect("dashboard")   # <--- IMPORTANT
+
+    return render(request, 'update_slot2.html', {
+        'golfers': golfers
+    })
+
+@login_required
+def updateslot1(request):
+    golfers = GolfersInDatabase.objects.filter(rating__gte=9, rating__lte=10)
+    print("updateslot1:", golfers)
+    if request.method == "POST":
+        golfer_id = request.POST.get("golfer")
+
+        if golfer_id:
+            lineup = UserTrackedGolfers.objects.get(user=request.user)
+            lineup.selection2_id = golfer_id
+            lineup.save()
+
+        # Redirect to dashboard after saving
+        return redirect("dashboard")   # <--- IMPORTANT
+
+    return render(request, 'update_slot1.html', {
+        'golfers': golfers
+    })
+
+@login_required
+def updateslot3(request):
+    golfers = GolfersInDatabase.objects.filter(rating__gte=5, rating__lte=6)
+    print("updateslot3:", golfers)
+    if request.method == "POST":
+        golfer_id = request.POST.get("golfer")
+
+        if golfer_id:
+            lineup = UserTrackedGolfers.objects.get(user=request.user)
+            lineup.selection2_id = golfer_id
+            lineup.save()
+
+        # Redirect to dashboard after saving
+        return redirect("dashboard")   # <--- IMPORTANT
+
+    return render(request, 'update_slot3.html', {
+        'golfers': golfers
+    })
+
+
+@login_required
+def updateslot4(request):
+    golfers = GolfersInDatabase.objects.filter(rating__gte=3, rating__lte=4)
+    print("updateslot4:", golfers)
+    if request.method == "POST":
+        golfer_id = request.POST.get("golfer")
+
+        if golfer_id:
+            lineup = UserTrackedGolfers.objects.get(user=request.user)
+            lineup.selection2_id = golfer_id
+            lineup.save()
+
+        # Redirect to dashboard after saving
+        return redirect("dashboard")   # <--- IMPORTANT
+
+    return render(request, 'update_slot4.html', {
+        'golfers': golfers
+    })
+
+
+@login_required
+def updateslot5(request):
+    golfers = GolfersInDatabase.objects.filter(rating__gte=1, rating__lte=2)
+    print("updateslot5:", golfers)
+    if request.method == "POST":
+        golfer_id = request.POST.get("golfer")
+
+        if golfer_id:
+            lineup = UserTrackedGolfers.objects.get(user=request.user)
+            lineup.selection2_id = golfer_id
+            lineup.save()
+
+        # Redirect to dashboard after saving
+        return redirect("dashboard")   # <--- IMPORTANT
+
+    return render(request, 'update_slot5.html', {
+        'golfers': golfers
+    })

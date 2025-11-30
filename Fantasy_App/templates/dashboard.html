@@ -39,6 +39,8 @@
 
 <h1 style="display:inline;">hi {{ user.username }}</h1>
 &nbsp; | &nbsp;
+<a href="http://127.0.0.1:8000/updateslot2/">update slot 2</a>
+&nbsp; | &nbsp;
 <a href="http://127.0.0.1:8000/change_fav_team/">Change Fav Team</a>
 &nbsp; | &nbsp;
 <a href="http://127.0.0.1:8000/withdraw/">Withdraw</a>
@@ -53,7 +55,7 @@
 <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 800px;">
     <ul>
     <li>
-        <strong>Slot 1:</strong>
+        <strong>Slot 1: <a href="http://127.0.0.1:8000/updateslot1/">update slot 1</a></strong>
         {% if lineup.selection1 %}
             {{ lineup.selection1.name }} (Rating: {{ lineup.selection1.rating }})
         {% else %}
@@ -62,7 +64,7 @@
     </li>
 
     <li>
-        <strong>Slot 2:</strong>
+        <strong>Slot 2: <a href="http://127.0.0.1:8000/updateslot2/">update slot 2</a> </strong>
         {% if lineup.selection2 %}
             {{ lineup.selection2.name }} (Rating: {{ lineup.selection2.rating }})
         {% else %}
@@ -71,7 +73,7 @@
     </li>
 
     <li>
-        <strong>Slot 3:</strong>
+        <strong>Slot 3: <a href="http://127.0.0.1:8000/updateslot3/">update slot 3</a></strong>
         {% if lineup.selection3 %}
             {{ lineup.selection3.name }} (Rating: {{ lineup.selection3.rating }})
         {% else %}
@@ -80,7 +82,7 @@
     </li>
 
     <li>
-        <strong>Slot 4:</strong>
+        <strong>Slot 4: <a href="http://127.0.0.1:8000/updateslot4/">update slot 4</a> </strong>
         {% if lineup.selection4 %}
             {{ lineup.selection4.name }} (Rating: {{ lineup.selection4.rating }})
         {% else %}
@@ -89,7 +91,7 @@
     </li>
 
     <li>
-        <strong>Slot 5:</strong>
+        <strong>Slot 5: <a href="http://127.0.0.1:8000/updateslot5/">update slot 5</a></strong>
         {% if lineup.selection5 %}
             {{ lineup.selection5.name }} (Rating: {{ lineup.selection5.rating }})
         {% else %}
