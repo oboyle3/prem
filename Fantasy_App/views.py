@@ -5,6 +5,8 @@ from .scraper import get_premier_league_table
 from .models import Team, UserProfile, UserStock ,Wallet, Currency
 from .forms import BuyStockForm, PredictionForm , StockForm
 from .models import Game, Prediction , Team, Stock , GolfersInDatabase
+from .models import GolfersInDatabase, UserTrackedGolfers
+
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -21,6 +23,7 @@ def landing(request):
 @login_required
 def dashboard(request):
      golfers = GolfersInDatabase.objects.all()
+     lineup = UserTrackedGolfers.objects.get(user=request.user)
      stocks = Stock.objects.all()
      print("these are the stocks:", stocks)
      print("GOLFERS:", golfers)
@@ -44,6 +47,7 @@ def dashboard(request):
         "currency": currency,
         "stocks": stocks,
         "golfers": golfers,
+        "lineup": lineup,
         
     })
    # return render(request,'dashboard.html',{'teams':teams})
@@ -199,3 +203,24 @@ def buy_stock(request, stock_id):
         })
 
     return render(request, "buy_stock.html", {"stock": stock})
+
+
+
+def select_golfers(request):
+    tracking_obj, created = UserTrackedGolfers.objects.get_or_create(user=request.user)
+    if request.method == "POST":
+        selected_ids = request.POST.getlist("golfers")
+
+        if len(selected_ids) > 5:
+            return render(request, "select_golfers.html", {
+                "golfers": GolfersInDatabase.objects.all(),
+                "error": "You can select a maximum of 5 golfers."
+            })
+
+        tracking_obj = UserTrackedGolfers.objects.get(user=request.user)
+        tracking_obj.golfers.set(selected_ids)
+        return redirect("dashboard")
+
+    return render(request, "select_golfers.html", {
+        "golfers": GolfersInDatabase.objects.all()
+    })

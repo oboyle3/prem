@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.exceptions import ValidationError
 class Team(models.Model):
     name = models.CharField(max_length=50)
     city = models.CharField(max_length=100, blank=True, null=True)
@@ -122,3 +123,47 @@ class GolfersInDatabase(models.Model):
     )
     def __str__(self):
         return self.name
+    
+
+def validate_max_five(value):
+    if value.count() > 5:
+        raise ValidationError("You can only track up to 5 golfers.")
+
+
+class UserTrackedGolfers(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    # 5 selection slots
+    selection1 = models.ForeignKey(
+        GolfersInDatabase,
+        null=True, blank=True,
+        related_name="slot1_users",
+        on_delete=models.SET_NULL,
+    )
+    selection2 = models.ForeignKey(
+        GolfersInDatabase,
+        null=True, blank=True,
+        related_name="slot2_users",
+        on_delete=models.SET_NULL,
+    )
+    selection3 = models.ForeignKey(
+        GolfersInDatabase,
+        null=True, blank=True,
+        related_name="slot3_users",
+        on_delete=models.SET_NULL,
+    )
+    selection4 = models.ForeignKey(
+        GolfersInDatabase,
+        null=True, blank=True,
+        related_name="slot4_users",
+        on_delete=models.SET_NULL,
+    )
+    selection5 = models.ForeignKey(
+        GolfersInDatabase,
+        null=True, blank=True,
+        related_name="slot5_users",
+        on_delete=models.SET_NULL,
+    )
+
+    def __str__(self):
+        return f"{self.user.username}'s lineup"

@@ -28,5 +28,6 @@ urlpatterns = [
     path('signup/',views.signup,name='signup'),
     path('addstock/',views.addstock,name='addstock'),
     path("buy_stock/<int:stock_id>/", views.buy_stock, name="buy_stock"),
+    path('select_golfers/',views.select_golfers,name='select_golfers'),
 ]
-"""buy_stock"""
+"""buy_stock            select_golfers   """

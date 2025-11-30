@@ -45,10 +45,58 @@
 &nbsp; | &nbsp;
 <a href="http://127.0.0.1:8000/admin/">Admin</a>
 &nbsp; | &nbsp;
-<a href="http://127.0.0.1:8000/addstock/">Add Stock</a>
+<a href="http://127.0.0.1:8000/addstock/">Add Stock </a>
 &nbsp; | &nbsp;
 <a href="http://127.0.0.1:8000/premtable/">Prem table</a>
+&nbsp; | &nbsp;
+<a href="http://127.0.0.1:8000/select_golfers/">select_golfers</a>
 <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 800px;">
+    <ul>
+    <li>
+        <strong>Slot 1:</strong>
+        {% if lineup.selection1 %}
+            {{ lineup.selection1.name }} (Rating: {{ lineup.selection1.rating }})
+        {% else %}
+            <em>Empty</em>
+        {% endif %}
+    </li>
+
+    <li>
+        <strong>Slot 2:</strong>
+        {% if lineup.selection2 %}
+            {{ lineup.selection2.name }} (Rating: {{ lineup.selection2.rating }})
+        {% else %}
+            <em>Empty</em>
+        {% endif %}
+    </li>
+
+    <li>
+        <strong>Slot 3:</strong>
+        {% if lineup.selection3 %}
+            {{ lineup.selection3.name }} (Rating: {{ lineup.selection3.rating }})
+        {% else %}
+            <em>Empty</em>
+        {% endif %}
+    </li>
+
+    <li>
+        <strong>Slot 4:</strong>
+        {% if lineup.selection4 %}
+            {{ lineup.selection4.name }} (Rating: {{ lineup.selection4.rating }})
+        {% else %}
+            <em>Empty</em>
+        {% endif %}
+    </li>
+
+    <li>
+        <strong>Slot 5:</strong>
+        {% if lineup.selection5 %}
+            {{ lineup.selection5.name }} (Rating: {{ lineup.selection5.rating }})
+        {% else %}
+            <em>Empty</em>
+        {% endif %}
+    </li>
+</ul>
     <tr>
         <th colspan="2" style="text-align:center;">User Info</th>
     </tr>

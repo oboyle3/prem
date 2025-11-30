@@ -47,25 +47,22 @@
     <p>hi {{ user.username }}</p>
     <form method="POST">
     {% csrf_token %}
+    <p>Select up to 5 golfers:</p>
 
-    <label for="favorite_team">Favorite Team:</label>
-    <select name="favorite_team" id="favorite_team" required>
-        <option value="">-- Choose a Team --</option>
+    {% for golfer in golfers %}
+        <label>
+            <input type="checkbox" name="golfers" value="{{ golfer.id }}">
+            {{ golfer.name }} ({{ golfer.rating }})
+        </label><br>
+    {% endfor %}
 
-        {% for team in teams %}
-            <option value="{{ team.id }}"
-                {% if profile.favorite_team and profile.favorite_team.id == team.id %}
-                    selected
-                {% endif %}
-            >
-                {{ team.name }}
-            </option>
-        {% endfor %}
-    </select>
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
 
-    <br><br>
-    <button type="submit">Save Favorite Team</button>
+    <button type="submit">Save</button>
 </form>
+
    
     <a href="{% url 'logout' %}">logout</a>
     <footer>
