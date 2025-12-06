@@ -167,3 +167,26 @@ class UserTrackedGolfers(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s lineup"
+
+
+
+
+class Tournament(models.Model):
+    name = models.CharField(max_length=100)
+    start_date = models.DateField()
+    end_date = models.DateField()
+
+    def __str__(self):
+        return self.name
+    
+
+class GolferScore(models.Model):
+    golfer = models.ForeignKey(GolfersInDatabase, on_delete=models.CASCADE, related_name="scores")
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE, related_name="scores")
+
+    round_number = models.IntegerField()  # 1,2,3,4 = Thu/Fri/Sat/Sun
+    score = models.IntegerField()  # e.g., 70
+    relative_to_par = models.IntegerField(null=True, blank=True)  # -3, +2, etc.
+
+    def __str__(self):
+        return f"{self.golfer.name} - R{self.round_number} - {self.score}"

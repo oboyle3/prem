@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Golfer Scores</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            margin: 20px auto;
+            font-size: 20px;
+        }
+        th, td {
+            padding: 8px 10px;
+            border: 1px solid #aaa;
+            text-align: center;
+        }
+        th {
+            background: #eee;
+        }
+    </style>
+</head>
+
+<body>
+     <h1 style="display:inline;">hi {{ user.username }}</h1>
+    &nbsp; | &nbsp;
+    <a href="/updateslot2/">update slot 2</a>
+    &nbsp; | &nbsp;
+    <a href="/change_fav_team/">Change Fav Team</a>
+    &nbsp; | &nbsp;
+    <a href="/withdraw/">Withdraw</a>
+    &nbsp; | &nbsp;
+    <a href="/admin/">Admin</a>
+    &nbsp; | &nbsp;
+    <a href="/addstock/">Add Stock</a>
+    &nbsp; | &nbsp;
+    <a href="/premtable/">Prem table</a>
+    &nbsp; | &nbsp;
+    <a href="/select_golfers/">select_golfers</a>
+
+<h1 style="text-align:center;">All Golfer Scores</h1>
+
+<form method="get">
+    <label>Select Golfer:</label>
+    <select name="golfer">
+        <option value="">-- All Golfers --</option>
+
+        {% for golfer in golfers %}
+            <option value="{{ golfer.id }}"
+                {% if golfer.id == selected_golfer_id %}
+                    selected
+                {% endif %}
+            >
+                {{ golfer.name }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Filter</button>
+</form>
+
+<br><br>
+
+<table border="1" cellpadding="8">
+    <thead>
+        <tr>
+            <th>Tournament</th>
+            <th>Golfer</th>
+            <th>Round</th>
+            <th>Score</th>
+            <th>To Par</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for s in scores %}
+            <tr>
+                <td>{{ s.tournament.name }}</td>
+                <td>{{ s.golfer.name }}</td>
+                <td>R{{ s.round_number }}</td>
+                <td>{{ s.score }}</td>
+                <td>{{ s.relative_to_par }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -1,206 +1,347 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>dashboard</title>
+    <title>Dashboard</title>
+
     <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        /* ---------------- TOP NAV ---------------- */
+        .navbar {
+            background: #1e1e1e;
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar .left {
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .navbar a {
+            color: #ddd;
+            margin-left: 20px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .navbar a:hover {
+            color: #fff;
+        }
+
+        /* -------------- LAYOUT WRAPPER -------------- */
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        /* -------------- SECTION HEADERS -------------- */
+        h2 {
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 6px;
+            margin-top: 40px;
+            color: #444;
+        }
+
+        /* ---------- GOLFER SCORES LIST ---------- */
+        ul.clean-list {
+            list-style: none;
+            padding: 0;
+        }
+        ul.clean-list li {
+            background: white;
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* ---------------- SLOT CARDS ---------------- */
+        .slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .slot-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .slot-card a {
+            font-size: 16px;
+            color: #0077cc;
+        }
+        .slot-card strong {
+            font-size: 18px;
+        }
+
+        /* ------------------ TABLES ------------------ */
         table {
-            font-size: 32px; /* smaller text */
-            width: auto; /* only as wide as needed */
+            width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin-top: 15px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            font-size: 18px;
         }
         th, td {
-            padding: 4px 6px; /* smaller padding */
-            border: 1px solid #e38d8d;
-            text-align: center;
+            border: 1px solid #ddd;
+            padding: 12px 14px;
+            text-align: left;
         }
         th {
-            background-color: #f2f2f2;
+            background: #efefef;
+            font-weight: bold;
         }
-        a {
-            font-size: 32px; /* smaller text */
+
+        /* ---------------- FOOTER LOGOUT ------------- */
+        .logout {
+            display: block;
+            margin: 40px 0;
+            text-align: center;
+            font-size: 20px;
         }
+        .logout a {
+            color: #cc0000;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .countdown {
+    color: #ff6600;
+    font-size: 10px;
+}
+/* Smaller Prem Table */
+.prem-table-header {
+    font-size: 18px;           /* smaller than before */
+    margin: 20px auto 10px;    /* center horizontally with auto margins */
+    text-align: center;         /* center the text */
+}
+
+.prem-table {
+    font-size: 12px;            /* smaller table text */
+    width: auto;                /* shrink to fit content */
+    margin: 0 auto;             /* center the table */
+    border-collapse: collapse;  /* optional, cleaner look */
+}
+
+.prem-table th, 
+.prem-table td {
+    padding: 4px 6px;           /* smaller padding */
+    border: 1px solid #ddd;
+    text-align: center;         /* center table content if desired */
+}
+
     </style>
 </head>
+
+
 <body>
-    <!--<h1>dashboard.html</h1> <a href="http://127.0.0.1:8000/change_fav_team/">Change Fav Team</a><br>
-    <a href="http://127.0.0.1:8000/withdraw/">WithDraw</a>
-    <p>hi {{ user.username }}</p>
-    {% if favorite_team %}
-    <p>Your favorite team: {{ favorite_team.name }}</p>
-{% else %}
-    <p>You have not selected a favorite team.</p>
-{% endif %}
-<p><strong>User:</strong> {{ wallet.user.username }}</p>
-<p><strong>Currency:</strong> {{ currency.name }}</p>
-<p><strong>Balance:</strong> {{ wallet.balance}}</p>
-<p><strong>Total Supply:</strong> {{ currency.total_supply }}</p>
--->
 
-<h1 style="display:inline;">hi {{ user.username }}</h1>
-&nbsp; | &nbsp;
-<a href="http://127.0.0.1:8000/updateslot2/">update slot 2</a>
-&nbsp; | &nbsp;
-<a href="http://127.0.0.1:8000/change_fav_team/">Change Fav Team</a>
-&nbsp; | &nbsp;
-<a href="http://127.0.0.1:8000/withdraw/">Withdraw</a>
-&nbsp; | &nbsp;
-<a href="http://127.0.0.1:8000/admin/">Admin</a>
-&nbsp; | &nbsp;
-<a href="http://127.0.0.1:8000/addstock/">Add Stock </a>
-&nbsp; | &nbsp;
-<a href="http://127.0.0.1:8000/premtable/">Prem table</a>
-&nbsp; | &nbsp;
-<a href="http://127.0.0.1:8000/select_golfers/">select_golfers</a>
-<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 800px;">
-    <ul>
-    <li>
-        <strong>Slot 1: <a href="http://127.0.0.1:8000/updateslot1/">update slot 1</a></strong>
-        {% if lineup.selection1 %}
-            {{ lineup.selection1.name }} (Rating: {{ lineup.selection1.rating }})
-        {% else %}
-            <em>Empty</em>
-        {% endif %}
-    </li>
+    <!-- ========================== -->
+    <!--        TOP NAV BAR         -->
+    <!-- ========================== -->
+    <div class="navbar">
+    <div class="left">
+        Hello {{ user.username }}!
+    </div>
 
-    <li>
-        <strong>Slot 2: <a href="http://127.0.0.1:8000/updateslot2/">update slot 2</a> </strong>
-        {% if lineup.selection2 %}
-            {{ lineup.selection2.name }} (Rating: {{ lineup.selection2.rating }})
-        {% else %}
-            <em>Empty</em>
-        {% endif %}
-    </li>
+    <div class="right">
+        <!--<a href="/updateslot2/">Update Slot 2</a>-->
+        <a href="/change_fav_team/">Prem</a>
+        <!--<a href="/withdraw/">Withdraw</a>-->
+        <a href="/admin/">Admin</a>
+        <!--<a href="/addstock/">Add Stock</a>-->
+        <!--<a href="/select_golfers/">Select Golfers</a>-->
+        <a href="/allscores/">All Scores</a>
 
-    <li>
-        <strong>Slot 3: <a href="http://127.0.0.1:8000/updateslot3/">update slot 3</a></strong>
-        {% if lineup.selection3 %}
-            {{ lineup.selection3.name }} (Rating: {{ lineup.selection3.rating }})
-        {% else %}
-            <em>Empty</em>
-        {% endif %}
-    </li>
-
-    <li>
-        <strong>Slot 4: <a href="http://127.0.0.1:8000/updateslot4/">update slot 4</a> </strong>
-        {% if lineup.selection4 %}
-            {{ lineup.selection4.name }} (Rating: {{ lineup.selection4.rating }})
-        {% else %}
-            <em>Empty</em>
-        {% endif %}
-    </li>
-
-    <li>
-        <strong>Slot 5: <a href="http://127.0.0.1:8000/updateslot5/">update slot 5</a></strong>
-        {% if lineup.selection5 %}
-            {{ lineup.selection5.name }} (Rating: {{ lineup.selection5.rating }})
-        {% else %}
-            <em>Empty</em>
-        {% endif %}
-    </li>
-</ul>
-    <tr>
-        <th colspan="2" style="text-align:center;">User Info</th>
-    </tr>
-
-    <tr>
-        <td><strong>User</strong></td>
-        <td>{{ wallet.user.username }}</td>
-    </tr>
-
-    <tr>
-        <td><strong>Currency</strong></td>
-        <td>{{ currency.name }}</td>
-    </tr>
-
-    <tr>
-        <td><strong>Balance in your account</strong></td>
-        <td>{{ wallet.balance }}</td>
-    </tr>
-
-    <tr>
-        <td><strong>Total Supply in this Economy</strong></td>
-        <td>{{ currency.total_supply }}</td>
-    </tr>
-
-    <tr>
-        <td><strong>Favorite Team</strong></td>
-        <td>
-            {% if favorite_team %}
-                {{ favorite_team.name }}
-            {% else %}
-                Not selected
-            {% endif %}
-        </td>
-    </tr>
-</table>
-<h1>
-    test 
-</h1>
-  <ul>
-    {% for y in golfers %}
-        <li>{{ y.name }}</li>
-    {% endfor %}
-     </ul>
-
-<h1>
-    test
-</h1>
+        <!-- Countdown Timer -->
+        <span class="countdown" style="margin-left: 20px; font-weight: bold;">
+            Days until The Masters: {{ countdown.days }}d {{ countdown.hours }}h {{ countdown.minutes }}m {{ countdown.seconds }}s
+        </span>
+    </div>
+</div>
 
 
-  <h1>stocks database</h1>
 
-<ul>
-{% for stock in stocks %}
-    <li>
-        {{ stock.symbol }} – {{ stock.name }} – {{ stock.price }}  
-        <a href="{% url 'buy_stock' stock.id %}">Buy</a>
-    </li>
-{% endfor %}
-</ul>
+    <div class="container">
 
-    
+        <!-- ========================== -->
+        <!--      USER GOLFER SLOTS     -->
+        <!-- ========================== -->
+        <h2>Your Golfers</h2>
+
+        <div class="slots">
+
+            <!-- SLOT 1 -->
+            <div class="slot-card">
+                <strong>Slot 1</strong> — <a href="/updateslot1/">Update</a><br>
+                {% if lineup.selection1 %}
+                    {{ lineup.selection1.name }}<br>
+                    Rating: {{ lineup.selection1.rating }}
+                {% else %}
+                    <em>Empty</em>
+                {% endif %}
+            </div>
+
+            <!-- SLOT 2 -->
+            <div class="slot-card">
+                <strong>Slot 2</strong> — <a href="/updateslot2/">Update</a><br>
+                {% if lineup.selection2 %}
+                    {{ lineup.selection2.name }}<br>
+                    Rating: {{ lineup.selection2.rating }}
+                {% else %}
+                    <em>Empty</em>
+                {% endif %}
+            </div>
+
+            <!-- SLOT 3 -->
+            <div class="slot-card">
+                <strong>Slot 3</strong> — <a href="/updateslot3/">Update</a><br>
+                {% if lineup.selection3 %}
+                    {{ lineup.selection3.name }}<br>
+                    Rating: {{ lineup.selection3.rating }}
+                {% else %}
+                    <em>Empty</em>
+                {% endif %}
+            </div>
+
+            <!-- SLOT 4 -->
+            <div class="slot-card">
+                <strong>Slot 4</strong> — <a href="/updateslot4/">Update</a><br>
+                {% if lineup.selection4 %}
+                    {{ lineup.selection4.name }}<br>
+                    Rating: {{ lineup.selection4.rating }}
+                {% else %}
+                    <em>Empty</em>
+                {% endif %}
+            </div>
+
+            <!-- SLOT 5 -->
+            <div class="slot-card">
+                <strong>Slot 5</strong> — <a href="/updateslot5/">Update</a><br>
+                {% if lineup.selection5 %}
+                    {{ lineup.selection5.name }}<br>
+                    Rating: {{ lineup.selection5.rating }}
+                {% else %}
+                    <em>Empty</em>
+                {% endif %}
+            </div>
+
+        </div>
 
 
-<h1>TEST</h1><br>
-OODA Loop in Practice:
 
-Observe: Monitor business metrics, market trends, user behavior, and telemetry data
-Orient: Analyze options for what you can deliver, possibly through experiments
-Decide: Determine what to pursue based on data and business priorities
-Act: Deliver working software to real users and collect feedback
-<h1>TEST</h1>
+        <!-- ========================== -->
+        <!--     GOLFER SCORE LIST      -->
+        <!-- ========================== -->
+        <!-- <h2>Golfer Scores</h2>
 
-     <h1>Premier League Teams from my database</h1>
+        <ul class="clean-list">
+            {% for z in allgolferdata %}
+                <li>
+                    {{ z.golfer.name }} — {{ z.score }} — {{ z.date }} — {{ z.relative_to_par }}
+                </li>
+            {% endfor %}
+        </ul> -->
 
-     <ul>
-    {% for team in teams %}
-        <li>{{ team.name }}</li>
-    {% endfor %}
-     </ul>
 
-    <table>
-        <thead>
+        <!-- ========================== -->
+        <!--         USER INFO          -->
+        <!-- ========================== -->
+        <h2>Your Account</h2>
+
+        <table>
+            <tr><th>User</th><td>{{ wallet.user.username }}</td></tr>
+            <!-- <tr><th>Currency</th><td>{{ currency.name }}</td></tr>
+            <tr><th>Balance</th><td>{{ wallet.balance }}</td></tr>
+            <tr><th>Total Supply</th><td>{{ currency.total_supply }}</td></tr> -->
             <tr>
-                {% for head in headers %}
-                    <th>{{ head }}</th>
+                <th>Favorite Team</th>
+                <td>{% if favorite_team %}{{ favorite_team.name }}{% else %}Not selected{% endif %}</td>
+            </tr>
+        </table>
+
+
+        <!-- ========================== -->
+        <!--       GOLFER NAMES         -->
+        <!-- ========================== -->
+        <h2>All Golfers</h2>
+        <ul class="clean-list">
+            {% for y in golfers %}
+                <li>{{ y.name }}</li>
+            {% endfor %}
+        </ul>
+
+
+        <!-- ========================== -->
+        <!--         STOCKS LIST        -->
+        <!-- ========================== -->
+        <!-- <h2>Stocks Database</h2>
+
+        <ul class="clean-list">
+            {% for stock in stocks %}
+                <li>
+                    {{ stock.symbol }} — {{ stock.name }} — {{ stock.price }}
+                    <a href="{% url 'buy_stock' stock.id %}">Buy</a>
+                </li>
+            {% endfor %}
+        </ul> -->
+
+
+        <!-- ========================== -->
+        <!--  PREMIER LEAGUE DATABASE   -->
+        <!-- ========================== -->
+        <!-- <h2>Premier League Teams</h2>
+
+        <ul class="clean-list">
+            {% for team in teams %}
+                <li>{{ team.name }}</li>
+            {% endfor %}
+        </ul> -->
+
+
+        <!-- ========================== -->
+        <!--     GENERIC TABLE RENDER   -->
+        <!-- ========================== -->
+    <h2 class="prem-table-header">Prem Table</h2>
+
+<table class="prem-table">
+    <thead>
+        <tr>
+            {% for head in headers %}
+                <th>{{ head }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+            <tr>
+                {% for item in row %}
+                    <td>{{ item }}</td>
                 {% endfor %}
             </tr>
-        </thead>
-        <tbody>
-            {% for row in rows %}
-                <tr>
-                    {% for item in row %}
-                        <td>{{ item }}</td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        {% endfor %}
+    </tbody>
+</table>
 
 
-   
 
-    <a href="{% url 'logout' %}">logout</a>
+        <!-- ========================== -->
+        <!--         LOGOUT LINK        -->
+        <!-- ========================== -->
+        <div class="logout">
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+
+    </div>
+
 </body>
 </html>

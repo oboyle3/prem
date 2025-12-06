@@ -1,11 +1,88 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>prem</title>
-    </head>
-    <body>
-        <h1>Hello this is landing.html</h1>
-        <a href="{% url 'dashboard' %}">dash</a><br>
-        <a href="{% url 'signup' %}">signop</a>
-    </body>
+<head>
+    <title>Masters 26' Fantasy League HQ</title>
+    <style>
+        /* ---------- BODY ---------- */
+        body {
+            margin: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+            background: #1c1c1c; /* slightly lighter dark background */
+            color: #f5f5f5;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        /* ---------- HEADER ---------- */
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #00ccff;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: normal;
+            color: #bbb;
+            margin-bottom: 10px;
+        }
+
+        /* ---------- LOCATION ---------- */
+        .location {
+            font-family: 'Georgia', 'Times New Roman', serif; /* classy, slightly decorative */
+            font-size: 20px; /* smaller than h2 */
+            color: #aaaaaa; /* lighter than h2 */
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        /* ---------- BUTTONS ---------- */
+        .btn {
+            display: inline-block;
+            margin: 10px 20px;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #00ccff;
+            border: 2px solid #00ccff;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #00ccff;
+            color: #1c1c1c;
+        }
+
+        /* ---------- FOOTER ---------- */
+        footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Hero -->
+    <h1>Masters 26' Fantasy League HQ</h1>
+    <h2>Pick. Strategize. Dominate. The game is on.</h2>
+    <div class="location">Manayunk, Philadelphia</div>
+
+    <!-- Buttons -->
+    <a class="btn" href="{% url 'dashboard' %}">Go to Dashboard</a>
+    <a class="btn" href="{% url 'signup' %}">Sign Up</a>
+
+    <!-- Footer -->
+    <footer>
+        &copy; Standard Irishman. All rights reserved.
+    </footer>
+
+</body>
 </html>

@@ -2,10 +2,12 @@ from pyexpat.errors import messages
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .scraper import get_premier_league_table
-from .models import Team, UserProfile, UserStock ,Wallet, Currency
+from .models import GolferScore, Team, UserProfile, UserStock ,Wallet, Currency
 from .forms import BuyStockForm, PredictionForm , StockForm
 from .models import Game, Prediction , Team, Stock , GolfersInDatabase
 from .models import GolfersInDatabase, UserTrackedGolfers
+from zoneinfo import ZoneInfo
+from datetime import datetime
 
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, get_object_or_404, redirect
@@ -20,36 +22,61 @@ def landing(request):
 #     return render(request, 'dashboard.html')
 #path('dashboard/',views.dashboard,name='dashboard'),
 #path('change_fav_team/',viewschange_fav_team,name='change_fav_team'),
+
 @login_required
 def dashboard(request):
-     golfers = GolfersInDatabase.objects.all()
-     lineup = UserTrackedGolfers.objects.get(user=request.user)
-     stocks = Stock.objects.all()
-     print("these are the stocks:", stocks)
-     print("GOLFERS:", golfers)
-     wallet = request.user.wallet
-     currency = Currency.objects.first()
-     teams = Team.objects.all()
-     profile = UserProfile.objects.get(user=request.user) #will return oboyle3 (user)
-     #print(profile)
-     favorite_team = profile.favorite_team #willl return users favorite team
-     #print(favorite_team)
-     #teams = Team.objects.all()
-     table = get_premier_league_table()
-     headers = table[0]
-     rows = table[1:]
-     return render(request, "dashboard.html", {
+    # -------------------- Your existing queries --------------------
+    golfers = GolfersInDatabase.objects.all()
+    lineup = UserTrackedGolfers.objects.get(user=request.user)
+    stocks = Stock.objects.all()
+    wallet = request.user.wallet
+    currency = Currency.objects.first()
+    teams = Team.objects.all()
+    allgolferdata = GolferScore.objects.all()
+    profile = UserProfile.objects.get(user=request.user)
+    favorite_team = profile.favorite_team
+
+    table = get_premier_league_table()
+    headers = table[0]
+    rows = table[1:]
+
+    # -------------------- Countdown logic --------------------
+    est = ZoneInfo("America/New_York")
+    target_date = datetime(2026, 4, 9, 9, 0, 0, tzinfo=est)
+    now = datetime.now(est)
+    diff = target_date - now
+
+    if diff.total_seconds() > 0:
+        days = diff.days
+        seconds = diff.seconds
+        hours = seconds // 3600
+        minutes = (seconds % 3600) // 60
+        secs = seconds % 60
+    else:
+        days = hours = minutes = secs = 0  # Event has passed
+
+    countdown = {
+        "days": days,
+        "hours": hours,
+        "minutes": minutes,
+        "seconds": secs
+    }
+
+    # -------------------- Render --------------------
+    return render(request, "dashboard.html", {
         "headers": headers,
         "rows": rows,
-        'favorite_team': favorite_team,
+        "favorite_team": favorite_team,
         "teams": teams,
         "wallet": wallet,
         "currency": currency,
         "stocks": stocks,
         "golfers": golfers,
         "lineup": lineup,
-        
+        "allgolferdata": allgolferdata,
+        "countdown": countdown,  # Pass countdown to template
     })
+
    # return render(request,'dashboard.html',{'teams':teams})
 
 
@@ -324,3 +351,28 @@ def updateslot5(request):
     return render(request, 'update_slot5.html', {
         'golfers': golfers
     })
+
+@login_required
+def allscores(request):
+    # Get the logged-in user's selected golfers
+    try:
+        tracked = UserTrackedGolfers.objects.get(user=request.user)
+    except UserTrackedGolfers.DoesNotExist:
+        tracked = None
+
+    if tracked:
+        selected_golfers = [
+            tracked.selection1,
+            
+            tracked.selection2,
+            tracked.selection3,
+            tracked.selection4,
+            tracked.selection5,
+        ]
+
+        scores = GolferScore.objects.filter(golfer__in=selected_golfers)
+
+    else:
+        scores = GolferScore.objects.none()
+
+    return render(request, "allscores.html", {"scores": scores})

@@ -1,16 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Slot 3</title>
 
-<br><br><h1 style="display:inline;">hi {{ user.username }}</h1>
-&nbsp; | &nbsp;
-<a href="http://127.0.0.1:8000/dashboard/">Back to Dashboard</a>
-<h2>Update Slot 3 (Rating 5-6)</h2>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
 
-<form method="POST">
-    {% csrf_token %}
-    <select name="golfer">
-        {% for g in golfers %}
-            <option value="{{ g.id }}">{{ g.name }} (Rating: {{ g.rating }})</option>
-        {% endfor %}
-    </select>
+        /* ---------------- TOP NAV ---------------- */
+        .navbar {
+            background: #1e1e1e;
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar .left {
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .navbar a {
+            color: #ddd;
+            margin-left: 20px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .navbar a:hover {
+            color: #fff;
+        }
 
-    <button type="submit">Save Selection</button>
-</form>
+        /* ----------------- PAGE CONTENT ----------------- */
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 6px;
+        }
+
+        /* ----------------- FORM STYLING ----------------- */
+        select {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            font-size: 18px;
+            border-radius: 6px;
+            border: 1px solid #bbb;
+        }
+
+        button {
+            padding: 10px 22px;
+            background: #0077cc;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #005fa3;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- TOP NAV -->
+    <div class="navbar">
+        <div class="left">Hello {{ user.username }}!</div>
+
+        <div class="right">
+            <a href="/dashboard/">Back to Dashboard</a>
+        </div>
+    </div>
+
+
+    <!-- PAGE CONTAINER -->
+    <div class="container">
+
+        <h2>Update Slot 3 (Rating 5–6)</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label for="golfer"><strong>Select Golfer:</strong></label>
+            <select name="golfer" id="golfer">
+                {% for g in golfers %}
+                    <option value="{{ g.id }}">{{ g.name }} (Rating: {{ g.rating }})</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Save Selection</button>
+        </form>
+
+    </div>
+
+</body>
+</html>

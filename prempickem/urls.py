@@ -34,5 +34,6 @@ urlpatterns = [
     path('updateslot3/',views.updateslot3,name='updateslot3'),
     path('updateslot4/',views.updateslot4,name='updateslot4'),
     path('updateslot5/',views.updateslot5,name='updateslot5'),
+    path("allscores/", views.allscores, name="allscores"),
 ]
 """buy_stock            select_golfers      updateslot2    """
