@@ -27,6 +27,8 @@ def landing(request):
 def dashboard(request):
     # -------------------- Your existing queries --------------------
     golfers = GolfersInDatabase.objects.all()
+    for g in golfers:
+        print(f"ID {g.id} -> {g.name}")
     lineup = UserTrackedGolfers.objects.get(user=request.user)
     stocks = Stock.objects.all()
     wallet = request.user.wallet
