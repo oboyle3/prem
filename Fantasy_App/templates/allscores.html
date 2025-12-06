@@ -1,86 +1,161 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>All Golfer Scores</title>
+    <title>All Scores</title>
 
     <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        /* ---------------- TOP NAV ---------------- */
+        .navbar {
+            background: #1e1e1e;
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar .left {
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .navbar a {
+            color: #ddd;
+            margin-left: 20px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .navbar a:hover {
+            color: #fff;
+        }
+
+        /* -------------- LAYOUT WRAPPER -------------- */
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        /* -------------- SECTION HEADERS -------------- */
+        h1, h2 {
+            color: #444;
+            text-align: center;
+        }
+        h2 {
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 6px;
+            margin-top: 30px;
+        }
+
+        /* ------------------ TABLES ------------------ */
         table {
+            width: 100%;
             border-collapse: collapse;
-            width: 90%;
-            margin: 20px auto;
-            font-size: 20px;
+            margin-top: 15px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            font-size: 16px;
         }
         th, td {
-            padding: 8px 10px;
-            border: 1px solid #aaa;
+            border: 1px solid #ddd;
+            padding: 10px 12px;
             text-align: center;
         }
         th {
-            background: #eee;
+            background: #efefef;
+            font-weight: bold;
+        }
+
+        /* ---------------- FORM ---------------- */
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        select, button {
+            font-size: 16px;
+            padding: 6px 10px;
+            margin-left: 5px;
+        }
+
+        /* ---------------- FOOTER ---------------- */
+        .logout {
+            display: block;
+            margin: 40px 0;
+            text-align: center;
+            font-size: 16px;
+        }
+        .logout a {
+            color: #cc0000;
+            text-decoration: none;
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
-     <h1 style="display:inline;">hi {{ user.username }}</h1>
-    &nbsp; | &nbsp;
-    <a href="/updateslot2/">update slot 2</a>
-    &nbsp; | &nbsp;
-    <a href="/change_fav_team/">Change Fav Team</a>
-    &nbsp; | &nbsp;
-    <a href="/withdraw/">Withdraw</a>
-    &nbsp; | &nbsp;
-    <a href="/admin/">Admin</a>
-    &nbsp; | &nbsp;
-    <a href="/addstock/">Add Stock</a>
-    &nbsp; | &nbsp;
-    <a href="/premtable/">Prem table</a>
-    &nbsp; | &nbsp;
-    <a href="/select_golfers/">select_golfers</a>
 
-<h1 style="text-align:center;">All Golfer Scores</h1>
+    <!-- ========================== -->
+    <!--        TOP NAV BAR         -->
+    <!-- ========================== -->
+    <div class="navbar">
+        <div class="left">Hello {{ user.username }}!</div>
+        <div class="right">
+        <a href="/admin/">Admin</a>
+        <a href="/dashboard/">Dashboard</a>
+        </div>
+    </div>
 
-<form method="get">
-    <label>Select Golfer:</label>
-    <select name="golfer">
-        <option value="">-- All Golfers --</option>
+    <div class="container">
+        <h1>Your Golfers Scores</h1>
 
-        {% for golfer in golfers %}
-            <option value="{{ golfer.id }}"
-                {% if golfer.id == selected_golfer_id %}
-                    selected
-                {% endif %}
-            >
-                {{ golfer.name }}
-            </option>
-        {% endfor %}
-    </select>
+        <!-- Filter Form -->
+        <!-- <form method="get">
+            <label>Select Golfer:</label>
+            <select name="golfer">
+                <option value="">-- All Golfers --</option>
+                {% for golfer in golfers %}
+                    <option value="{{ golfer.id }}" {% if golfer.id == selected_golfer_id %}selected{% endif %}>
+                        {{ golfer.name }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Filter</button>
+        </form> -->
 
-    <button type="submit">Filter</button>
-</form>
+        <!-- Scores Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Tournament</th>
+                    <th>Golfer</th>
+                    <th>Round</th>
+                    <th>Score</th>
+                    <th>To Par</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in scores %}
+                    <tr>
+                        <td>{{ s.tournament.name }}</td>
+                        <td>{{ s.golfer.name }}</td>
+                        <td>R{{ s.round_number }}</td>
+                        <td>{{ s.score }}</td>
+                        <td>{{ s.relative_to_par }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-<br><br>
+        <div class="logout">
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </div>
 
-<table border="1" cellpadding="8">
-    <thead>
-        <tr>
-            <th>Tournament</th>
-            <th>Golfer</th>
-            <th>Round</th>
-            <th>Score</th>
-            <th>To Par</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        {% for s in scores %}
-            <tr>
-                <td>{{ s.tournament.name }}</td>
-                <td>{{ s.golfer.name }}</td>
-                <td>R{{ s.round_number }}</td>
-                <td>{{ s.score }}</td>
-                <td>{{ s.relative_to_par }}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+</body>
+</html>
