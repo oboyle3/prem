@@ -35,5 +35,7 @@ urlpatterns = [
     path('updateslot4/',views.updateslot4,name='updateslot4'),
     path('updateslot5/',views.updateslot5,name='updateslot5'),
     path("allscores/", views.allscores, name="allscores"),
+    path("mockadmin/", views.mockadmin, name="mockadmin"),
+    path('edit-book/<int:book_id>/', views.edit_book, name='edit_book'),
 ]
-"""buy_stock            select_golfers      updateslot2    """
+"""buy_stock            select_golfers      updateslot2   mockadmin  """

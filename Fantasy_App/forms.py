@@ -1,5 +1,5 @@
 from django import forms
-from .models import Prediction, Stock
+from .models import Prediction, Stock, Book
 
 class PredictionForm(forms.ModelForm):
     class Meta:
@@ -16,3 +16,9 @@ class StockForm(forms.ModelForm):
 
 class BuyStockForm(forms.Form):
     shares = forms.IntegerField(min_value=1)
+
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ['title', 'isbn']

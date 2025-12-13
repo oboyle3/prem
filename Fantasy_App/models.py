@@ -190,3 +190,12 @@ class GolferScore(models.Model):
 
     def __str__(self):
         return f"{self.golfer.name} - R{self.round_number} - {self.score}"
+    
+
+
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    isbn = models.CharField(max_length=10, unique=True)
+
+    def __str__(self):
+            return self.title
