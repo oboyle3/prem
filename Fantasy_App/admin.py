@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Team, UserProfile 
 from .models import  Game, Match
 from .models import Wallet, Currency, GolfersInDatabase, UserTrackedGolfers
-from .models import Tournament, GolferScore, Book
+from .models import Tournament, GolferScore, Book, GolferDBIAMTESTING
 
 
 
@@ -17,3 +17,4 @@ admin.site.register(UserTrackedGolfers)
 admin.site.register(Tournament)
 admin.site.register(GolferScore)
 admin.site.register(Book)
+admin.site.register(GolferDBIAMTESTING)

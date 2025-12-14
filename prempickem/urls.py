@@ -37,5 +37,10 @@ urlpatterns = [
     path("allscores/", views.allscores, name="allscores"),
     path("mockadmin/", views.mockadmin, name="mockadmin"),
     path('edit-book/<int:book_id>/', views.edit_book, name='edit_book'),
+    path('golfer/<int:golfer_id>/scores/', views.golfer_scores, name='golfer_scores'),
+    path('score/<int:score_id>/edit/', views.edit_score, name='edit_score'),
+    path('leaderboard/',views.leaderboard,name='leaderboard'),
+
+
 ]
-"""buy_stock            select_golfers      updateslot2   mockadmin  """
+"""buy_stock    leaderboard        select_golfers      updateslot2   mockadmin  """

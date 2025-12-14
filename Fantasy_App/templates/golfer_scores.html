@@ -1,0 +1,21 @@
+<h2>{{ golfer.name }} — Scores</h2>
+
+<table border="1">
+    <tr>
+        <th>Round</th>
+        <th>Score</th>
+        <th>Relative to Par</th>
+        <th>Edit</th>
+    </tr>
+
+    {% for score in scores %}
+    <tr>
+        <td>Round {{ score.round_number }}</td>
+        <td>{{ score.score }}</td>
+        <td>{{ score.relative_to_par }}</td>
+        <td>
+            <a href="{% url 'edit_score' score.id %}">Edit</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

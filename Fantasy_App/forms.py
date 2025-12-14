@@ -1,5 +1,5 @@
 from django import forms
-from .models import Prediction, Stock, Book
+from .models import Prediction, Stock, Book, GolferScore
 
 class PredictionForm(forms.ModelForm):
     class Meta:
@@ -22,3 +22,9 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = ['title', 'isbn']
+
+
+class GolferScoreForm(forms.ModelForm):
+    class Meta:
+        model = GolferScore
+        fields = ['round_number', 'score', 'relative_to_par']

@@ -199,3 +199,27 @@ class Book(models.Model):
 
     def __str__(self):
             return self.title
+    
+
+
+class AllGolfers(models.Model):
+    name = models.CharField(max_length=100)
+    hometown = models.CharField(max_length=100, blank=True)
+    tour = models.CharField(max_length=50)
+    rating = models.IntegerField()
+
+    day_1_score_Masters26 = models.IntegerField(null=True, blank=True)
+    day_2_score_Masters26 = models.IntegerField(null=True, blank=True)
+    day_3_score_Masters26 = models.IntegerField(null=True, blank=True)
+    day_4_score_Masters26 = models.IntegerField(null=True, blank=True)
+
+    def total_score(self):
+        return (
+            (self.day_1_score_Masters26 or 0) +
+            (self.day_2_score_Masters26 or 0) +
+            (self.day_3_score_Masters26 or 0) +
+            (self.day_4_score_Masters26 or 0)
+        )
+
+    def __str__(self):
+        return self.name

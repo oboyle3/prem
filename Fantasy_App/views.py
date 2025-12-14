@@ -10,6 +10,7 @@ from zoneinfo import ZoneInfo
 from datetime import datetime
 from .models import Book
 from .forms import BookForm
+from .models import GolferDBIAMTESTING
 
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, get_object_or_404, redirect
@@ -404,3 +405,56 @@ def edit_book(request, book_id):
         form = BookForm(instance=book)
 
     return render(request, 'edit_book.html', {'form': form, 'book': book})
+
+
+
+
+def mockadmin2(request):
+    someGolfers =  golfers = GolfersInDatabase.objects.all()
+    return render(request, 'mockadmin2.html',{
+        'someGolfers': someGolfers,
+        })
+
+
+
+def golfer_scores(request, golfer_id):
+    golfer = get_object_or_404(GolfersInDatabase, id=golfer_id)
+    scores = golfer.scores.all().order_by('round_number')
+
+    return render(
+        request,
+        'golfer_scores.html',
+        {
+            'golfer': golfer,
+            'scores': scores
+        }
+    )
+
+
+
+def edit_score(request, score_id):
+    score = get_object_or_404(GolferScore, id=score_id)
+
+    if request.method == 'POST':
+        form = GolferScoreForm(request.POST, instance=score)
+        if form.is_valid():
+            form.save()
+            return redirect('golfer_scores', golfer_id=score.golfer.id)
+    else:
+        form = GolferScoreForm(instance=score)
+
+    return render(
+        request,
+        'edit_score.html',
+        {
+            'form': form,
+            'score': score
+        }
+    )
+
+
+
+
+def leaderboard(request):
+    golfers = GolferDBIAMTESTING.objects.all()
+    return render(request, 'leaderboard.html', {'golfers': golfers})
